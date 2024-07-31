@@ -8,16 +8,11 @@ using System.Threading.Tasks;
 
 namespace Restuarants.Infrastructure.Persistance
 {
-    public class RestuarantDbContext : DbContext
+    internal class RestuarantDbContext : DbContext
     {
-
-        public DbSet<Restuarant> Restuarants { get; set; }
-        public DbSet<Dish> Dishes { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=RestuarantDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;");
-        }
+        public RestuarantDbContext(DbContextOptions<RestuarantDbContext> options) : base(options) { }
+        internal DbSet<Restuarant> Restuarants { get; set; }
+        internal DbSet<Dish> Dishes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
