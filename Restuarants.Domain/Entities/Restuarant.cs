@@ -9,6 +9,7 @@ namespace Restuarants.Domain.Entities
 {
     public class Restuarant
     {
+        public Guid Id { get; set; }
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
         public string Category { get; set; } = default!;
