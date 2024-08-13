@@ -12,7 +12,7 @@ namespace Restuarants.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-
+        public int? Calories {  get; set; }
         public Guid RestuarantId { get; set; }
     }
 }

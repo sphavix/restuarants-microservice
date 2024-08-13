@@ -2,11 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restuarants.Infrastructure.Persistance;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Restuarants.Infrastructure.SeedData;
 
 namespace Restuarants.Infrastructure.Extensions
 {
@@ -19,6 +15,8 @@ namespace Restuarants.Infrastructure.Extensions
             {
                 options.UseSqlServer(connectionString);
             });
+
+            services.AddScoped<IRestuarantSeeder, RestuarantSeeder>();
         }
     }
 }
