@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Restuarants.Infrastructure.Persistance
 {
-    internal class RestuarantDbContext : DbContext
+    public class RestuarantDbContext : DbContext
     {
         public RestuarantDbContext(DbContextOptions<RestuarantDbContext> options) : base(options) { }
         internal DbSet<Restuarant> Restuarants { get; set; }

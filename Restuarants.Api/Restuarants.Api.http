@@ -1,6 +1,9 @@
-@Restuarants.Api_HostAddress = http://localhost:5110
+@Restuarants.Api_HostAddress = https://localhost:7275
 
-GET {{Restuarants.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+ 
+
+###
+
+GET {{Restuarants.Api_HostAddress}}/api/restuarants
 
 ###

@@ -1,3 +1,4 @@
+using Restuarants.Application.Extensions;
 using Restuarants.Infrastructure.Extensions;
 using Restuarants.Infrastructure.SeedData;
 
@@ -10,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
