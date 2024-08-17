@@ -13,6 +13,7 @@ namespace Restuarants.Application.Extensions
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IRestuarantsService, RestuarantsService>();
+            services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
         }
     }
 }
