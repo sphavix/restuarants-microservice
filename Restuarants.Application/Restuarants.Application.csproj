@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Restuarants.Infrastructure\Restuarants.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dishes\" />
+  </ItemGroup>
+
 </Project>
