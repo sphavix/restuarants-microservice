@@ -27,5 +27,13 @@ namespace Restuarants.Infrastructure.Repositories
             return restuarant;
         }
 
+        public async Task<Restuarant> CreateRestuarantAsync(Restuarant restuarant)
+        {
+            var result = await _context.Restuarants.AddAsync(restuarant);
+            await _context.SaveChangesAsync().ConfigureAwait(true);
+
+            return result.Entity;
+        }
+
     }
 }
