@@ -11,12 +11,5 @@
     <ProjectReference Include="..\Restuarants.Infrastructure\Restuarants.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dishes\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-  </ItemGroup>
 
 </Project>
