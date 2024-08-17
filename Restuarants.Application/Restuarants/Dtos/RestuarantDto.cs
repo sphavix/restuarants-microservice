@@ -15,23 +15,5 @@ namespace Restuarants.Application.Restuarants.Dtos
         public string? PostalCode { get; set; }
         public List<DishDto> Dishes { get; set; } = [];
 
-
-        public static RestuarantDto? FromEntity(Restuarant? restuarant)
-        {
-            if (restuarant is null) return null;
-
-            return new RestuarantDto()
-            {
-                Id = restuarant.Id,
-                Name = restuarant.Name,
-                Category = restuarant.Category,
-                Description = restuarant.Description,
-                HasDelivery = restuarant.HasDelivery,
-                City = restuarant.Address?.City,
-                Street = restuarant.Address?.Street,
-                PostalCode = restuarant.Address?.PostalCode,
-                Dishes = restuarant.Dishes.Select(DishDto.FromEntity).ToList()
-            };
-        }
     }
 }
