@@ -37,5 +37,20 @@ namespace Restuarants.Application.Restuarants
 
             return restuarantDto;
         }
+
+        public async Task<CreateRestuarantDto> CreateRestuarant(CreateRestuarantDto createRestuarantDto)
+        {
+            logger.LogInformation("Creating a new restuarant");
+
+            // Map entity to Dto
+            var restuarant = mapper.Map<Restuarant>(createRestuarantDto);
+
+            await repository.CreateRestuarantAsync(restuarant);
+
+            // Map Dto back to entity
+            var response = mapper.Map<CreateRestuarantDto>(restuarant);
+
+            return response;
+        }
     }
 }

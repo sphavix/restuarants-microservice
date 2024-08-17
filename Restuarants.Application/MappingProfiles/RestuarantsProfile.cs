@@ -21,6 +21,16 @@ namespace Restuarants.Application.MappingProfiles
                 .ForMember(d => d.PostalCode, option =>
                     option.MapFrom(src => src.Address == null ? null : src.Address.PostalCode))
                 .ForMember(d => d.Dishes, option => option.MapFrom(src => src.Dishes)).ReverseMap();
+
+            CreateMap<CreateRestuarantDto, Restuarant>()
+                .ForMember(a => a.Address, opt => opt.MapFrom(
+                    src => new Address
+                    {
+                        City = src.City,
+                        Street = src.Street,
+                        PostalCode = src.PostalCode
+                    }))
+                .ReverseMap();
         }
     }
 }

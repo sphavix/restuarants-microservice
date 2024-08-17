@@ -11,5 +11,6 @@ namespace Restuarants.Domain.Repositories
     {
         Task<IEnumerable<Restuarant>> GetRestuarantsAsync();
         Task<Restuarant> GetRestuarantAsync(Guid id);
+        Task<Restuarant> CreateRestuarantAsync(Restuarant restuarant);
     }
 }
