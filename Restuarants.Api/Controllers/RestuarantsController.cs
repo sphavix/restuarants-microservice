@@ -24,8 +24,11 @@ namespace Restuarants.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRestuarant(Guid id)
         {
-            var result = await _restuarantsService.GetRestuarant(id);
-            return Ok(result);
+            var restuarant = await _restuarantsService.GetRestuarant(id);
+            if (restuarant is null)
+                return NotFound();
+
+            return Ok(restuarant);
         }
     }
 }
