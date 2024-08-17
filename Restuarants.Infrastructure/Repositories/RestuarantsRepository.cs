@@ -2,11 +2,6 @@
 using Restuarants.Domain.Entities;
 using Restuarants.Domain.Repositories;
 using Restuarants.Infrastructure.Persistance;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Restuarants.Infrastructure.Repositories
 {
@@ -21,8 +16,15 @@ namespace Restuarants.Infrastructure.Repositories
 
         public async Task<IEnumerable<Restuarant>> GetRestuarantsAsync()
         {
-            var restuarants = await _context.Restuarants.ToListAsync();
+            var restuarants = await _context.Restuarants.Include(x => x.Dishes).ToListAsync();
             return restuarants;
+        }
+
+        public async Task<Restuarant> GetRestuarantAsync(Guid id)
+        {
+            var restuarant = await _context.Restuarants.Where(x => x.Id == id)
+                .Include(x => x.Dishes).FirstOrDefaultAsync().ConfigureAwait(true);
+            return restuarant;
         }
 
     }

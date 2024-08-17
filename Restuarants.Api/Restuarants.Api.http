@@ -7,3 +7,7 @@
 GET {{Restuarants.Api_HostAddress}}/api/restuarants
 
 ###
+
+GET {{Restuarants.Api_HostAddress}}/api/restuarants/{id}
+
+###

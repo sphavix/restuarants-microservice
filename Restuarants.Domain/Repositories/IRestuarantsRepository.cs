@@ -10,5 +10,6 @@ namespace Restuarants.Domain.Repositories
     public interface IRestuarantsRepository
     {
         Task<IEnumerable<Restuarant>> GetRestuarantsAsync();
+        Task<Restuarant> GetRestuarantAsync(Guid id);
     }
 }
