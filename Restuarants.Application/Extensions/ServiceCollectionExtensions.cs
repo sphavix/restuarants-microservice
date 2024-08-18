@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
 using Restuarants.Application.Restuarants;
 using System;
 using System.Collections.Generic;
@@ -13,7 +15,10 @@ namespace Restuarants.Application.Extensions
         public static void AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IRestuarantsService, RestuarantsService>();
+
             services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
+
+            services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtensions).Assembly).AddFluentValidationAutoValidation();
         }
     }
 }
