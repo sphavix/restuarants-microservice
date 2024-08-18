@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restuarants.Application.Restuarants;
+using Restuarants.Application.Restuarants.Commands.CreateRestuarant;
 using Restuarants.Application.Restuarants.Dtos;
+using Restuarants.Application.Restuarants.Queries.GetAllRestuarants;
+using Restuarants.Application.Restuarants.Queries.GetRestuarant;
 
 namespace Restuarants.Api.Controllers
 {
@@ -9,33 +13,39 @@ namespace Restuarants.Api.Controllers
     [ApiController]
     public class RestuarantsController : ControllerBase
     {
-        private readonly IRestuarantsService _restuarantsService;
-        public RestuarantsController(IRestuarantsService restuarantsService)
+        private readonly IMediator _mediator;
+        public RestuarantsController(IMediator mediator)
         {
-            _restuarantsService = restuarantsService ?? throw new ArgumentException(nameof(restuarantsService));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var restuarants = await _restuarantsService.GetRestuarants();
-            return Ok(restuarants);
+            var restuarants = new GetRestuarantsQuery();
+            var results = await _mediator.Send(restuarants);
+            return Ok(results);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRestuarant([FromRoute] Guid id)
         {
-            var restuarant = await _restuarantsService.GetRestuarant(id);
+            var restuarant = new GetRestuarantByIdQuery(id);
             if (restuarant is null)
+            {
                 return NotFound();
+            }
 
-            return Ok(restuarant);
+            var results = await _mediator.Send(restuarant);
+
+            return Ok(results);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRestuarant([FromBody] CreateRestuarantDto createRestuarantDto)
+        public async Task<ActionResult<RestuarantDto>> CreateRestuarant([FromBody] CreateRestuarantCommand command)
         {
-           return Ok(await _restuarantsService.CreateRestuarant(createRestuarantDto));            
+            var response = await _mediator.Send(command);
+            return Ok(response);
         }
     }
 }

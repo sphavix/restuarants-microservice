@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
+using Restuarants.Application.Restuarants.Commands.CreateRestuarant;
 using Restuarants.Application.Restuarants.Dtos;
 using Restuarants.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Restuarants.Application.MappingProfiles
 {
@@ -22,7 +18,7 @@ namespace Restuarants.Application.MappingProfiles
                     option.MapFrom(src => src.Address == null ? null : src.Address.PostalCode))
                 .ForMember(d => d.Dishes, option => option.MapFrom(src => src.Dishes)).ReverseMap();
 
-            CreateMap<CreateRestuarantDto, Restuarant>()
+            CreateMap<CreateRestuarantCommand, Restuarant>()
                 .ForMember(a => a.Address, opt => opt.MapFrom(
                     src => new Address
                     {
