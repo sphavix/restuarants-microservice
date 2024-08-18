@@ -1,8 +1,14 @@
-﻿
+﻿using MediatR;
+using Restuarants.Application.Restuarants.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Restuarants.Application.Restuarants.Dtos
+namespace Restuarants.Application.Restuarants.Commands.CreateRestuarant
 {
-    public class CreateRestuarantDto
+    public class CreateRestuarantCommand : IRequest<RestuarantDto>
     {
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
