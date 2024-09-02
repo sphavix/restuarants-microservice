@@ -35,5 +35,19 @@ namespace Restuarants.Infrastructure.Repositories
             return result.Entity;
         }
 
+        public async Task<bool> UpdateRestuarantAsync(Restuarant restuarant)
+        {
+           _context.Restuarants.Update(restuarant);
+            return await _context.SaveChangesAsync().ConfigureAwait(true) > 0;
+        }
+
+        public async Task<bool> DeleteRestuarantAsync(Guid id)
+        {
+            var restuarant = await _context.Restuarants.FindAsync(id);
+            _context.Restuarants.Remove(restuarant);
+            await _context.SaveChangesAsync().ConfigureAwait(true);
+            return true;
+        }
+
     }
 }
