@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restuarants.Application.Restuarants;
 using Restuarants.Application.Restuarants.Commands.CreateRestuarant;
+using Restuarants.Application.Restuarants.Commands.DeleteRestuarant;
+using Restuarants.Application.Restuarants.Commands.UpdateRestuarant;
 using Restuarants.Application.Restuarants.Dtos;
 using Restuarants.Application.Restuarants.Queries.GetAllRestuarants;
 using Restuarants.Application.Restuarants.Queries.GetRestuarant;
@@ -46,6 +48,25 @@ namespace Restuarants.Api.Controllers
         {
             var response = await _mediator.Send(command);
             return Ok(response);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRestuarant([FromBody] UpdateRestuarantCommand command)
+        {
+            var response = await _mediator.Send(command);
+            return Ok(response);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRestuarant(Guid id)
+        {
+            var isDeleted = await _mediator.Send(new DeleteRestuarantCommand(id));
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+
+            return NoContent();
         }
     }
 }
