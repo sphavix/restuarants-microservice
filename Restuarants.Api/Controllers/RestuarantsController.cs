@@ -31,10 +31,6 @@ namespace Restuarants.Api.Controllers
         public async Task<IActionResult> GetRestuarant([FromRoute] Guid id)
         {
             var restuarant = new GetRestuarantByIdQuery(id);
-            if (restuarant is null)
-            {
-                return NotFound();
-            }
 
             var results = await _mediator.Send(restuarant);
 

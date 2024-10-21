@@ -23,7 +23,7 @@ namespace Restuarants.Application.Restuarants.Commands.DeleteRestuarant
 
             if(restuarant is null)
             {
-                return false;
+                throw new ApplicationException($"Restuarant with {command.Id} does not exist, please try again");
             }
 
             await _restuarantsRepository.DeleteRestuarantAsync(command.Id);

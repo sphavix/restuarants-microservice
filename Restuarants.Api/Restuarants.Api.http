@@ -8,6 +8,6 @@ GET {{Restuarants.Api_HostAddress}}/api/restuarants
 
 ###
 
-GET {{Restuarants.Api_HostAddress}}/api/restuarants/{id}
+GET https://localhost:7275/api/Restuarants/87076add-f9eb-4774-7a97-08dcbbb4d9ae
 
 ###

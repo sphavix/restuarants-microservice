@@ -1,3 +1,4 @@
+using Restuarants.Api.Middlewares;
 using Restuarants.Application.Extensions;
 using Restuarants.Infrastructure.Extensions;
 using Restuarants.Infrastructure.SeedData;
@@ -11,6 +12,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<GlobalErrorHandlingMiddleware>();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -26,6 +29,8 @@ var seeder = scope.ServiceProvider.GetRequiredService<IRestuarantSeeder>();
 await seeder.SeedData();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
