@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Restuarants.Application.Restuarants;
 using Restuarants.Application.Restuarants.Commands.CreateRestuarant;
 using Restuarants.Application.Restuarants.Commands.DeleteRestuarant;
 using Restuarants.Application.Restuarants.Commands.UpdateRestuarant;

@@ -17,7 +17,7 @@ namespace Restuarants.Application.Restuarants.Commands.DeleteRestuarant
 
         public async Task<bool> Handle(DeleteRestuarantCommand command, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Deleting restuarant with an id {command.Id}");
+            _logger.LogInformation("Deleting restuarant with an id {RestuarantId}", command.Id);
 
             var restuarant = await _restuarantsRepository.GetRestuarantAsync(command.Id);
 

@@ -15,7 +15,7 @@ namespace Restuarants.Infrastructure.Extensions
             var connectionString = configuration.GetConnectionString("RestuarantConnect");
             services.AddDbContext<RestuarantDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString).EnableSensitiveDataLogging();
             });
 
             services.AddScoped<IRestuarantSeeder, RestuarantSeeder>();
