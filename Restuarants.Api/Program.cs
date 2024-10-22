@@ -1,6 +1,8 @@
+using Restuarants.Api.Middlewares;
 using Restuarants.Application.Extensions;
 using Restuarants.Infrastructure.Extensions;
 using Restuarants.Infrastructure.SeedData;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +13,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<GlobalErrorHandlingMiddleware>();
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
 
@@ -22,12 +29,16 @@ var seeder = scope.ServiceProvider.GetRequiredService<IRestuarantSeeder>();
 await seeder.SeedData();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<GlobalErrorHandlingMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

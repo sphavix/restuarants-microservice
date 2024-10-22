@@ -1,7 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Restuarants.Application.Restuarants;
 using Restuarants.Application.Restuarants.Commands.CreateRestuarant;
 using Restuarants.Application.Restuarants.Commands.DeleteRestuarant;
 using Restuarants.Application.Restuarants.Commands.UpdateRestuarant;
@@ -33,10 +31,6 @@ namespace Restuarants.Api.Controllers
         public async Task<IActionResult> GetRestuarant([FromRoute] Guid id)
         {
             var restuarant = new GetRestuarantByIdQuery(id);
-            if (restuarant is null)
-            {
-                return NotFound();
-            }
 
             var results = await _mediator.Send(restuarant);
 
