@@ -41,7 +41,7 @@ namespace Restuarants.Api.Controllers
         public async Task<ActionResult<RestuarantDto>> CreateRestuarant([FromBody] CreateRestuarantCommand command)
         {
             var response = await _mediator.Send(command);
-            return Ok(response);
+            return CreatedAtAction(nameof(GetRestuarant), new { response.Id }, response);
         }
 
         [HttpPut]
@@ -52,6 +52,8 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteRestuarant(Guid id)
         {
             var isDeleted = await _mediator.Send(new DeleteRestuarantCommand(id));
