@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Restuarants.Domain.Entities;
 using Restuarants.Domain.Repositories;
 using Restuarants.Infrastructure.Persistance;
 using Restuarants.Infrastructure.Repositories;
@@ -17,6 +18,9 @@ namespace Restuarants.Infrastructure.Extensions
             {
                 options.UseSqlServer(connectionString).EnableSensitiveDataLogging();
             });
+
+            services.AddIdentityApiEndpoints<ApplicationUser>()
+                .AddEntityFrameworkStores<RestuarantDbContext>();
 
             services.AddScoped<IRestuarantSeeder, RestuarantSeeder>();
             services.AddScoped<IRestuarantsRepository, RestuarantsRepository>();
