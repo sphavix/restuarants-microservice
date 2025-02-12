@@ -1,14 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Restuarants.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Restuarants.Infrastructure.Persistance
 {
-    public class RestuarantDbContext : DbContext
+    public class RestuarantDbContext : IdentityDbContext<ApplicationUser>
     {
         public RestuarantDbContext(DbContextOptions<RestuarantDbContext> options) : base(options) { }
         internal DbSet<Restuarant> Restuarants { get; set; }
