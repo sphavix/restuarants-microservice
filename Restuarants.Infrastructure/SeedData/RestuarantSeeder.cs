@@ -32,9 +32,18 @@ namespace Restuarants.Infrastructure.SeedData
         {
             List<IdentityRole> roles =
             [
-                new(UserRole.User),
-                new(UserRole.Owner),
+                new(UserRole.User)
+                {
+                    NormalizedName = UserRole.User.ToUpper()
+                },
+                new(UserRole.Owner)
+                {
+                    NormalizedName = UserRole.Owner.ToUpper()
+                },
                 new(UserRole.Admin)
+                {
+                    NormalizedName = UserRole.Admin.ToUpper()
+                }
             ];
 
             return roles;

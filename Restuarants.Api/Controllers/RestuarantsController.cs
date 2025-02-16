@@ -7,6 +7,7 @@ using Restuarants.Application.Restuarants.Commands.UpdateRestuarant;
 using Restuarants.Application.Restuarants.Dtos;
 using Restuarants.Application.Restuarants.Queries.GetAllRestuarants;
 using Restuarants.Application.Restuarants.Queries.GetRestuarant;
+using Restuarants.Domain.Constants;
 
 namespace Restuarants.Api.Controllers
 {
@@ -41,6 +42,7 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = UserRole.Owner)]
         public async Task<ActionResult<RestuarantDto>> CreateRestuarant([FromBody] CreateRestuarantCommand command)
         {
             var response = await _mediator.Send(command);

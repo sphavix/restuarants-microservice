@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Restuarants.Domain.Entities;
 
-namespace Restuarants.Application.Users.Commands
+namespace Restuarants.Application.Users.Commands.UpdateUserSetails
 {
-    public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHandler> _logger, 
-        IUserContext _userContext, 
+    public class UpdateUserDetailsCommandHandler(ILogger<UpdateUserDetailsCommandHandler> _logger,
+        IUserContext _userContext,
         IUserStore<ApplicationUser> _userStore) : IRequestHandler<UpdateUserDetailsCommand>
     {
         public async Task Handle(UpdateUserDetailsCommand request, CancellationToken cancellationToken)
@@ -17,7 +17,7 @@ namespace Restuarants.Application.Users.Commands
 
             var dbUser = await _userStore.FindByIdAsync(user!.Id, cancellationToken);
 
-            if(dbUser == null)
+            if (dbUser == null)
             {
                 throw new Exception("User not found!");
             }
