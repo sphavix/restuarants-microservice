@@ -53,11 +53,14 @@ namespace Restuarants.Api.Controllers
             return CreatedAtAction(nameof(GetRestuarant), new { response.Id }, response);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateRestuarant([FromBody] UpdateRestuarantCommand command)
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateRestuarant([FromRoute]Guid id, UpdateRestuarantCommand command)
         {
-            var response = await _mediator.Send(command);
-            return Ok(response);
+            command.Id = id;
+            await _mediator.Send(command);
+           return NoContent();
         }
 
         [HttpDelete("{id}")]

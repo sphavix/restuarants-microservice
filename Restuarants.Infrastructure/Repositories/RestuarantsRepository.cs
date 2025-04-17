@@ -75,11 +75,11 @@ namespace Restuarants.Infrastructure.Repositories
             return result.Entity;
         }
 
-        public async Task<bool> UpdateRestuarantAsync(Restuarant restuarant)
-        {
-           _context.Restuarants.Update(restuarant);
-            return await _context.SaveChangesAsync().ConfigureAwait(true) > 0;
-        }
+        //public async Task UpdateRestuarantAsync(Restuarant restuarant)
+        //{
+        //   _context.Restuarants.Update(restuarant);
+        //  await _context.SaveChangesAsync().ConfigureAwait(true) > 0;
+        //}
 
         public async Task<bool> DeleteRestuarantAsync(Guid id)
         {
@@ -88,6 +88,8 @@ namespace Restuarants.Infrastructure.Repositories
             await _context.SaveChangesAsync().ConfigureAwait(true);
             return true;
         }
+
+        public Task SaveChanges() => _context.SaveChangesAsync();
 
     }
 }
