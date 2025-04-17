@@ -12,8 +12,8 @@ using Restuarants.Infrastructure.Persistance;
 namespace Restuarants.Infrastructure.Migrations
 {
     [DbContext(typeof(RestuarantDbContext))]
-    [Migration("20250212170354_IdentityAdded")]
-    partial class IdentityAdded
+    [Migration("20250312162901_RestuarantOwnerColAdded")]
+    partial class RestuarantOwnerColAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -170,6 +170,9 @@ namespace Restuarants.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateOnly?>("DateOfBirth")
+                        .HasColumnType("date");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -182,6 +185,9 @@ namespace Restuarants.Infrastructure.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Nationality")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -275,7 +281,12 @@ namespace Restuarants.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Restuarants");
                 });
@@ -342,6 +353,10 @@ namespace Restuarants.Infrastructure.Migrations
 
             modelBuilder.Entity("Restuarants.Domain.Entities.Restuarant", b =>
                 {
+                    b.HasOne("Restuarants.Domain.Entities.ApplicationUser", "Owner")
+                        .WithMany("OwnedRestuarants")
+                        .HasForeignKey("OwnerId");
+
                     b.OwnsOne("Restuarants.Domain.Entities.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("RestuarantId")
@@ -365,6 +380,13 @@ namespace Restuarants.Infrastructure.Migrations
                         });
 
                     b.Navigation("Address");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Restuarants.Domain.Entities.ApplicationUser", b =>
+                {
+                    b.Navigation("OwnedRestuarants");
                 });
 
             modelBuilder.Entity("Restuarants.Domain.Entities.Restuarant", b =>

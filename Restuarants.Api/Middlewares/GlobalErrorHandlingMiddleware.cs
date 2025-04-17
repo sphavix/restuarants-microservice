@@ -1,4 +1,6 @@
 ﻿
+using Restuarants.Domain.Exceptions;
+
 namespace Restuarants.Api.Middlewares
 {
     public class GlobalErrorHandlingMiddleware(ILogger<GlobalErrorHandlingMiddleware> _logger) : IMiddleware
@@ -9,10 +11,15 @@ namespace Restuarants.Api.Middlewares
             {
                 await next.Invoke(context);
             }
-            catch(ApplicationException apiError)
+            catch(NotFoundException apiError)
             {
                 context.Response.StatusCode = 404;
                 await context.Response.WriteAsync(apiError.Message);
+            }
+            catch(ForbidException)
+            {
+                context.Response.StatusCode = 403;
+                await context.Response.WriteAsync("Access Forbidden");
             }
             catch (Exception ex)
             {

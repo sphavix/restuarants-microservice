@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Restuarants.Application.Dishes.Commands.CreateDish;
@@ -6,6 +7,7 @@ using Restuarants.Application.Dishes.Commands.DeleteDishes;
 using Restuarants.Application.Dishes.Dtos;
 using Restuarants.Application.Dishes.Queries.GetDishesForRestuarant;
 using Restuarants.Application.Dishes.Queries.GetDishForRestuarant;
+using Restuarants.Infrastructure.Authorization;
 
 namespace Restuarants.Api.Controllers
 {
@@ -21,6 +23,7 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Policy = PolicyNames.AtLeast20Yrs)]
         public async Task<ActionResult<IEnumerable<DishDto>>> GetDishesForRestuarant([FromRoute] Guid restuarantId)
         {
             var dishes = new GetDishesForRestuarantQuery(restuarantId);
