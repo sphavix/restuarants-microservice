@@ -12,7 +12,7 @@ namespace Restuarants.Application.Users
 
             if (user == null)
             {
-                throw new InvalidOperationException("user context is not present");
+                throw new InvalidOperationException("User context is not present");
             }
 
             if (user.Identity == null || !user.Identity.IsAuthenticated)
@@ -29,7 +29,7 @@ namespace Restuarants.Application.Users
                 ? (DateOnly?)null 
                 : DateOnly.ParseExact(dateOfBirthAsString, "yyyy-MM-dd"); 
 
-            return new CurrentUser(userId, email, roles, dateOfBirthAsString, dateOfBirth);
+            return new CurrentUser(userId, email, roles, nationality, dateOfBirth);
         }
     }
 }
