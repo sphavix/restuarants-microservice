@@ -24,13 +24,14 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpGet]
-        //[AllowAnonymous]
-        [Authorize(Policy = PolicyNames.CreatedAtLeast2Restuarants)]
-        public async Task<IActionResult> GetAll()
+        [AllowAnonymous]
+        //[Authorize(Policy = PolicyNames.CreatedAtLeast2Restuarants)]
+        public async Task<ActionResult<IEnumerable<RestuarantDto>>> GetAll([FromQuery] GetRestuarantsQuery query)
         {
-            var restuarants = new GetRestuarantsQuery();
-            var results = await _mediator.Send(restuarants);
-            return Ok(results);
+            var restuarants = await _mediator.Send(query);
+            //var restuarants = new GetRestuarantsQuery(query);
+            //var results = await _mediator.Send(restuarants);
+            return Ok(restuarants);
         }
 
         [HttpGet("{id}")]

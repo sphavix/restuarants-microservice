@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Restuarants.Domain.Constants;
 using Restuarants.Domain.Entities;
 using Restuarants.Domain.Repositories;
 using Restuarants.Infrastructure.Persistance;
+using System.Linq.Expressions;
 
 namespace Restuarants.Infrastructure.Repositories
 {
@@ -18,6 +20,44 @@ namespace Restuarants.Infrastructure.Repositories
         {
             var restuarants = await _context.Restuarants.Include(x => x.Dishes).ToListAsync();
             return restuarants;
+        }
+
+        public async Task<(IEnumerable<Restuarant>, int)> GetMatchingRestuarantsAsync(string? searchPhrase, 
+            int pageSize, 
+            int pageNumber, 
+            string? sortBy, 
+            SortDirection sortOrder) // Tuple returns 2 element
+        {
+            var searchPhraseLower = searchPhrase?.ToLower();
+
+            var baseQuery = _context.Restuarants
+                .Where(x => searchPhraseLower == null || (x.Name.ToLower().Contains(searchPhraseLower))
+                                                        || x.Description.ToLower().Contains(searchPhraseLower));
+
+            var totalCount = await baseQuery.CountAsync();
+
+            if(sortBy != null)
+            {
+                // create dictionary for our sortby & sortOrder
+                var columnsSelector = new Dictionary<string, Expression<Func<Restuarant, object>>>
+                {
+                    { nameof(Restuarant.Name), x => x.Name },
+                    { nameof(Restuarant.Description), x => x.Description },
+                    { nameof(Restuarant.Category), x => x.Category },
+                };
+
+                var selectedColumn = columnsSelector[sortBy];
+                baseQuery = sortOrder == SortDirection.Ascending 
+                    ? baseQuery.OrderBy(selectedColumn)
+                    : baseQuery.OrderByDescending(selectedColumn);
+            }
+
+            var restuarants = await baseQuery
+                .Skip(pageSize * (pageNumber -1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (restuarants, totalCount);
         }
 
         public async Task<Restuarant> GetRestuarantAsync(Guid id)
