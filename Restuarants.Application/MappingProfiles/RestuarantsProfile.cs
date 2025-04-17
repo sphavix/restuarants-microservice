@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Restuarants.Application.Restuarants.Commands.CreateRestuarant;
+using Restuarants.Application.Restuarants.Commands.UpdateRestuarant;
 using Restuarants.Application.Restuarants.Dtos;
 using Restuarants.Domain.Entities;
 
@@ -26,6 +27,8 @@ namespace Restuarants.Application.MappingProfiles
                         Street = src.Street,
                         PostalCode = src.PostalCode
                     }))
+                .ReverseMap();
+            CreateMap<UpdateRestuarantCommand, Restuarant>()
                 .ReverseMap();
         }
     }

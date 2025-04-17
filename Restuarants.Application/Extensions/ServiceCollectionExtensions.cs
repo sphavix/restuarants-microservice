@@ -2,6 +2,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using Restuarants.Application.Users;
+using Restuarants.Application.Users.Abstract;
 
 namespace Restuarants.Application.Extensions
 {

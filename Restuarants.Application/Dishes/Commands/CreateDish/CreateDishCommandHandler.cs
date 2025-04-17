@@ -3,7 +3,9 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Restuarants.Domain.Abstracts;
 using Restuarants.Domain.Entities;
+using Restuarants.Domain.Exceptions;
 using Restuarants.Domain.Repositories;
 
 namespace Restuarants.Application.Dishes.Commands.CreateDish
@@ -14,14 +16,17 @@ namespace Restuarants.Application.Dishes.Commands.CreateDish
         private readonly IRestuarantsRepository _restuarantRepository;
         private readonly IDishRepository _dishRepository;
         private readonly IMapper _mapper;
+        private readonly IRestuarantAuthorizationService _restuarantAuthorizationService;
 
         public CreateDishCommandHandler(ILogger<CreateDishCommandHandler> logger, IRestuarantsRepository restuarantRepository, 
-            IDishRepository dishRepository, IMapper mapper)
+            IDishRepository dishRepository, IMapper mapper, IRestuarantAuthorizationService restuarantAuthorizationService)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _restuarantRepository = restuarantRepository ?? throw new ArgumentNullException(nameof(restuarantRepository));
             _dishRepository = dishRepository ?? throw new ArgumentNullException(nameof(dishRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _restuarantAuthorizationService = restuarantAuthorizationService ?? throw new ArgumentNullException(nameof(restuarantAuthorizationService));
+
         }
         public async Task<Guid> Handle(CreateDishCommand command, CancellationToken cancellationToken)
         {
@@ -32,6 +37,11 @@ namespace Restuarants.Application.Dishes.Commands.CreateDish
             if(restuarant is null)
             {
                 throw new ApplicationException("Error occured while trying to create a new dish!");
+            }
+
+            if (_restuarantAuthorizationService.Authorize(restuarant, Domain.Constants.ResourceOperation.Create) == false)
+            {
+                throw new ForbidException();
             }
 
             var dish = _mapper.Map<Dish>(command);

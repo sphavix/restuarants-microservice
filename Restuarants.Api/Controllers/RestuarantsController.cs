@@ -8,6 +8,7 @@ using Restuarants.Application.Restuarants.Dtos;
 using Restuarants.Application.Restuarants.Queries.GetAllRestuarants;
 using Restuarants.Application.Restuarants.Queries.GetRestuarant;
 using Restuarants.Domain.Constants;
+using Restuarants.Infrastructure.Authorization;
 
 namespace Restuarants.Api.Controllers
 {
@@ -23,7 +24,8 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Policy = PolicyNames.CreatedAtLeast2Restuarants)]
         public async Task<IActionResult> GetAll()
         {
             var restuarants = new GetRestuarantsQuery();
@@ -32,6 +34,7 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = PolicyNames.HasNationality)]
         public async Task<IActionResult> GetRestuarant([FromRoute] Guid id)
         {
             var restuarant = new GetRestuarantByIdQuery(id);

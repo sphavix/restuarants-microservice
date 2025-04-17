@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Restuarants.Domain.Entities;
+using Restuarants.Application.Users.Abstract;
 
 namespace Restuarants.Application.Users.Commands.UpdateUserSetails
 {
