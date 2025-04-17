@@ -8,7 +8,7 @@ using Restuarants.Domain.Repositories;
 
 namespace Restuarants.Application.Restuarants.Commands.UpdateRestuarant
 {
-    public class UpdateRestuarantCommandHandler : IRequestHandler<UpdateRestuarantCommand, bool>
+    public class UpdateRestuarantCommandHandler : IRequestHandler<UpdateRestuarantCommand>
     {
         private readonly IRestuarantsRepository _restuarantsRepository;
         private readonly ILogger<UpdateRestuarantCommandHandler> _logger;
@@ -24,7 +24,7 @@ namespace Restuarants.Application.Restuarants.Commands.UpdateRestuarant
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<bool> Handle(UpdateRestuarantCommand command, CancellationToken cancellationToken)
+        public async Task Handle(UpdateRestuarantCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Updating restuarant with id: {RestuarantId} with {@UpdateRestuarant}", command.Id, command);
             var restuarant = await _restuarantsRepository.GetRestuarantAsync(command.Id);
@@ -48,7 +48,7 @@ namespace Restuarants.Application.Restuarants.Commands.UpdateRestuarant
             _mapper.Map(command, restuarant);
 
 
-            return true;
+            await _restuarantsRepository.SaveChanges();
         }
     }
 }

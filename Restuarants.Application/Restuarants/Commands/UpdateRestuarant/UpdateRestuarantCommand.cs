@@ -2,7 +2,7 @@
 
 namespace Restuarants.Application.Restuarants.Commands.UpdateRestuarant
 {
-    public class UpdateRestuarantCommand : IRequest<bool>
+    public class UpdateRestuarantCommand : IRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = default!;

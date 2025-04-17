@@ -9,7 +9,8 @@ namespace Restuarants.Domain.Repositories
         Task<(IEnumerable<Restuarant>, int)> GetMatchingRestuarantsAsync(string? searchPhrase, int pageSize, int pageNumber, string? sortBy, SortDirection sortOrder);
         Task<Restuarant> GetRestuarantAsync(Guid id);
         Task<Restuarant> CreateRestuarantAsync(Restuarant restuarant);
-        Task<bool> UpdateRestuarantAsync(Restuarant restuarant);
+        //Task UpdateRestuarantAsync(Restuarant restuarant);
+        Task SaveChanges();
         Task<bool> DeleteRestuarantAsync(Guid id);
     }
 }
