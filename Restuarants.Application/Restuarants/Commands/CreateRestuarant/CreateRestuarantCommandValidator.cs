@@ -4,7 +4,7 @@ namespace Restuarants.Application.Restuarants.Commands.CreateRestuarant
 {
     public class CreateRestuarantCommandValidator : AbstractValidator<CreateRestuarantCommand>
     {
-        private readonly List<string> validCategories = ["Italian", "Mexican", "American", "South African", "Indian"];
+        private readonly List<string> validCategories = ["Italian", "Mexican", "American", "South African", "Indian", "Street Food"];
         public CreateRestuarantCommandValidator()
         {
             RuleFor(dto => dto.Name).Length(3, 100).NotEmpty().WithMessage("The restuarant name is required");
