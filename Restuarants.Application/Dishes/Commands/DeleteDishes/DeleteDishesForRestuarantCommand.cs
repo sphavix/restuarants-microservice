@@ -5,9 +5,9 @@ namespace Restuarants.Application.Dishes.Commands.DeleteDishes
 {
     public class DeleteDishesForRestuarantCommand : IRequest
     {
-        public Guid RestuarantId { get; }
+        public int RestuarantId { get; }
 
-        public DeleteDishesForRestuarantCommand(Guid restuarantId)
+        public DeleteDishesForRestuarantCommand(int restuarantId)
         {
             RestuarantId = restuarantId;
         }

@@ -60,19 +60,19 @@ namespace Restuarants.Infrastructure.Repositories
             return (restuarants, totalCount);
         }
 
-        public async Task<Restuarant> GetRestuarantAsync(Guid id)
+        public async Task<Restuarant> GetRestuarantAsync(int id)
         {
             var restuarant = await _context.Restuarants.Where(x => x.Id == id)
                 .Include(x => x.Dishes).FirstOrDefaultAsync().ConfigureAwait(true);
             return restuarant;
         }
 
-        public async Task<Restuarant> CreateRestuarantAsync(Restuarant restuarant)
+        public async Task<int> CreateRestuarantAsync(Restuarant restuarant)
         {
-            var result = await _context.Restuarants.AddAsync(restuarant);
-            await _context.SaveChangesAsync().ConfigureAwait(true);
+            _context.Restuarants.Add(restuarant);
+            await _context.SaveChangesAsync();
 
-            return result.Entity;
+            return restuarant.Id;
         }
 
         //public async Task UpdateRestuarantAsync(Restuarant restuarant)
@@ -81,7 +81,7 @@ namespace Restuarants.Infrastructure.Repositories
         //  await _context.SaveChangesAsync().ConfigureAwait(true) > 0;
         //}
 
-        public async Task<bool> DeleteRestuarantAsync(Guid id)
+        public async Task<bool> DeleteRestuarantAsync(int id)
         {
             var restuarant = await _context.Restuarants.FindAsync(id);
             _context.Restuarants.Remove(restuarant);

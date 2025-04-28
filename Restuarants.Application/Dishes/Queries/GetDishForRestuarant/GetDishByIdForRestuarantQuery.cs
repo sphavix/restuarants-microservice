@@ -5,10 +5,10 @@ namespace Restuarants.Application.Dishes.Queries.GetDishForRestuarant
 {
     public class GetDishByIdForRestuarantQuery : IRequest<DishDto>
     {
-        public Guid RestuarantId { get; }
-        public Guid DishId { get; }
+        public int RestuarantId { get; }
+        public int DishId { get; }
 
-        public GetDishByIdForRestuarantQuery(Guid restuarantId, Guid dishId)
+        public GetDishByIdForRestuarantQuery(int restuarantId, int dishId)
         {
             RestuarantId = restuarantId;
             DishId = dishId;

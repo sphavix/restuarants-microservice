@@ -24,7 +24,7 @@ namespace Restuarants.Api.Controllers
 
         [HttpGet]
         //[Authorize(Policy = PolicyNames.AtLeast20Yrs)]
-        public async Task<ActionResult<IEnumerable<DishDto>>> GetDishesForRestuarant([FromRoute] Guid restuarantId)
+        public async Task<ActionResult<IEnumerable<DishDto>>> GetDishesForRestuarant([FromRoute] int restuarantId)
         {
             var dishes = new GetDishesForRestuarantQuery(restuarantId);
 
@@ -34,7 +34,7 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpGet("{dishId:guid}")]
-        public async Task<ActionResult<DishDto>> GetDishByIdForRestuarant([FromRoute] Guid restuarantId, [FromRoute] Guid dishId)
+        public async Task<ActionResult<DishDto>> GetDishByIdForRestuarant([FromRoute] int restuarantId, [FromRoute] int dishId)
         {
             var dishes = new GetDishByIdForRestuarantQuery(restuarantId, dishId);
             
@@ -46,7 +46,7 @@ namespace Restuarants.Api.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateDish([FromRoute] Guid restuarantId, CreateDishCommand command)
+        public async Task<IActionResult> CreateDish([FromRoute] int restuarantId, CreateDishCommand command)
         {
             command.RestuarantId = restuarantId;
 
@@ -56,7 +56,7 @@ namespace Restuarants.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteDishesForRestuarant([FromRoute] Guid restuarantId)
+        public async Task<IActionResult> DeleteDishesForRestuarant([FromRoute] int restuarantId)
         {
             var dishes = new DeleteDishesForRestuarantCommand(restuarantId);
             await _mediator.Send(dishes);

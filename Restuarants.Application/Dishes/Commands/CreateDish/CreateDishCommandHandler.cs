@@ -10,7 +10,7 @@ using Restuarants.Domain.Repositories;
 
 namespace Restuarants.Application.Dishes.Commands.CreateDish
 {
-    public class CreateDishCommandHandler : IRequestHandler<CreateDishCommand, Guid>
+    public class CreateDishCommandHandler : IRequestHandler<CreateDishCommand, int>
     {
         private readonly ILogger<CreateDishCommandHandler> _logger;
         private readonly IRestuarantsRepository _restuarantRepository;
@@ -28,7 +28,7 @@ namespace Restuarants.Application.Dishes.Commands.CreateDish
             _restuarantAuthorizationService = restuarantAuthorizationService ?? throw new ArgumentNullException(nameof(restuarantAuthorizationService));
 
         }
-        public async Task<Guid> Handle(CreateDishCommand command, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateDishCommand command, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Creating a new dish for the restuarant", command);
 

@@ -36,7 +36,7 @@ namespace Restuarants.Api.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Policy = PolicyNames.HasNationality)]
-        public async Task<IActionResult> GetRestuarant([FromRoute] Guid id)
+        public async Task<IActionResult> GetRestuarant([FromRoute] int id)
         {
             var restuarant = new GetRestuarantByIdQuery(id);
 
@@ -49,14 +49,14 @@ namespace Restuarants.Api.Controllers
         [Authorize(Roles = UserRole.Owner)]
         public async Task<ActionResult<RestuarantDto>> CreateRestuarant([FromBody] CreateRestuarantCommand command)
         {
-            var response = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetRestuarant), new { response.Id }, response);
+            int response = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetRestuarant), new { response }, response);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateRestuarant([FromRoute]Guid id, UpdateRestuarantCommand command)
+        public async Task<IActionResult> UpdateRestuarant([FromRoute]int id, UpdateRestuarantCommand command)
         {
             command.Id = id;
             await _mediator.Send(command);
@@ -66,7 +66,7 @@ namespace Restuarants.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteRestuarant(Guid id)
+        public async Task<IActionResult> DeleteRestuarant(int id)
         {
             var isDeleted = await _mediator.Send(new DeleteRestuarantCommand(id));
             if (isDeleted)

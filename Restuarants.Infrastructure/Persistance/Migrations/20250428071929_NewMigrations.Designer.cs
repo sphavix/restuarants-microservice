@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restuarants.Infrastructure.Persistance;
 
 #nullable disable
 
-namespace Restuarants.Infrastructure.Migrations
+namespace Restuarants.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(RestuarantDbContext))]
-    partial class RestuarantDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250428071929_NewMigrations")]
+    partial class NewMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -228,9 +231,11 @@ namespace Restuarants.Infrastructure.Migrations
 
             modelBuilder.Entity("Restuarants.Domain.Entities.Dish", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("Calories")
                         .HasColumnType("int");
@@ -244,8 +249,8 @@ namespace Restuarants.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("RestuarantId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RestuarantId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -256,9 +261,11 @@ namespace Restuarants.Infrastructure.Migrations
 
             modelBuilder.Entity("Restuarants.Domain.Entities.Restuarant", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
@@ -356,8 +363,8 @@ namespace Restuarants.Infrastructure.Migrations
 
                     b.OwnsOne("Restuarants.Domain.Entities.Address", "Address", b1 =>
                         {
-                            b1.Property<Guid>("RestuarantId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("RestuarantId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("City")
                                 .HasColumnType("nvarchar(max)");

@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Restuarants.Infrastructure.Migrations
+namespace Restuarants.Infrastructure.Persistance.Migrations
 {
     /// <inheritdoc />
-    public partial class RestuarantOwnerColAdded : Migration
+    public partial class NewMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -162,7 +162,8 @@ namespace Restuarants.Infrastructure.Migrations
                 name: "Restuarants",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -188,12 +189,13 @@ namespace Restuarants.Infrastructure.Migrations
                 name: "Dishes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Calories = table.Column<int>(type: "int", nullable: true),
-                    RestuarantId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RestuarantId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -205,9 +207,6 @@ namespace Restuarants.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.Sql("UPDATE Restuarants " +
-                "SET OwnerId = (SELECT TOP 1 Id FROM AspNetUsers)");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

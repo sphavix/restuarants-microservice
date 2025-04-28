@@ -10,9 +10,9 @@ namespace Restuarants.Application.Restuarants.Queries.GetRestuarant
 {
     public class GetRestuarantByIdQuery : IRequest<RestuarantDto>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
-        public GetRestuarantByIdQuery(Guid id)
+        public GetRestuarantByIdQuery(int id)
         {
             Id = id;
         }

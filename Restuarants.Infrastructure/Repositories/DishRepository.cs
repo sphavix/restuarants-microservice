@@ -14,7 +14,7 @@ namespace Restuarants.Infrastructure.Repositories
         }
 
 
-        public async Task<Guid> CreateDishAsync(Dish dish)
+        public async Task<int> CreateDishAsync(Dish dish)
         {
             _context.Dishes.Add(dish);
             await _context.SaveChangesAsync();

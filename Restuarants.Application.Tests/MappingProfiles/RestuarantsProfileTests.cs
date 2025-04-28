@@ -27,7 +27,7 @@ namespace Restuarants.Application.MappingProfiles.Tests
             // arrange
             var restuarant = new Restuarant
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Name = "Test Restuarant",
                 Description = "Test Description",
                 Category = "Test Category",
@@ -97,7 +97,7 @@ namespace Restuarants.Application.MappingProfiles.Tests
             // arrange
             var command = new UpdateRestuarantCommand
             {
-                Id = Guid.NewGuid(),
+                Id = 1,
                 Name = "Test Updated Restuarant",
                 Description = "Test Updated Description",
                 HasDelivery = false,

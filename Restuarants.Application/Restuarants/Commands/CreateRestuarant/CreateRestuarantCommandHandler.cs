@@ -8,7 +8,7 @@ using Restuarants.Domain.Repositories;
 
 namespace Restuarants.Application.Restuarants.Commands.CreateRestuarant
 {
-    public class CreateRestuarantCommandHandler : IRequestHandler<CreateRestuarantCommand, RestuarantDto>
+    public class CreateRestuarantCommandHandler : IRequestHandler<CreateRestuarantCommand, int>
     {
         private readonly IRestuarantsRepository _restuarantsRepository;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace Restuarants.Application.Restuarants.Commands.CreateRestuarant
             _userContext = userContext ?? throw new ArgumentNullException(nameof(userContext));
         }
 
-        public async Task<RestuarantDto> Handle(CreateRestuarantCommand command, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateRestuarantCommand command, CancellationToken cancellationToken)
         {
             var currentUser = _userContext.GetCurrentUser();
             _logger.LogInformation("{UserEmail} [{UserId}] is Creating a new restuarant {Restuarant}", currentUser.Email, currentUser.Id, command);
@@ -32,12 +32,9 @@ namespace Restuarants.Application.Restuarants.Commands.CreateRestuarant
             var restuarant = _mapper.Map<Restuarant>(command);
             restuarant.OwnerId = currentUser.Id;
 
-            var newRestuarant = await _restuarantsRepository.CreateRestuarantAsync(restuarant);
+            int id = await _restuarantsRepository.CreateRestuarantAsync(restuarant);
 
-            // Map Dto back to entity
-            var response = _mapper.Map<RestuarantDto>(newRestuarant);
-
-            return response;
+            return id;
         }
     }
 }
